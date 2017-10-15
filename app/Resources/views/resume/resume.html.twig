@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GitHub Resume for {{ user.login }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <div id="welcome">
+                <h1>GitHub R&eacute;sum&eacute;</h1>
+                {% if user.avatar_url is not empty %}
+                <img src="{{ user.avatar_url }}" alt="avatar of {{ user.login }}">
+                {% endif %}
+            </div>
+
+            <div style="clear: both;"></div>
+
+            <div id="content">
+                <table>
+                    <tr>
+                        <td><strong>Username:</strong></td>
+                        <td><ul><li>{{ user.login }}</li></ul></td>
+                    </tr>
+                    {% if user.blog is not empty %}
+                    <tr>
+                        <td><strong>Website:</strong></td>
+                        <td><ul><li><a href="{{ user.blog }}">{{ user.blog }}</a></ul></li></td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td><strong>Repositores:</strong></td>
+                        <td>
+                            <ul>
+                                {% for repo in repos %}
+                                    <li>
+                                        <a href="{{ repo.html_url }}">{{ repo.name }}</a>
+                                        {{ repo.description }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Languages:</strong></td>
+                        <td>
+                            <ul>
+                                {% for lang in langs %}
+                                    <li>
+                                        {{ lang.name }} - {{ lang.percentage }}%
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
